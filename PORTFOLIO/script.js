@@ -1,45 +1,108 @@
 document.addEventListener("DOMContentLoaded", function(){
 
 
-// ===============================
-// Smooth Scrolling
-// ===============================
+
+// ================= TYPING EFFECT =================
+
+
+const text = "Frontend Web Developer";
+
+
+let index = 0;
+
+
+const typingElement = document.querySelector(".hero h2");
+
+
+
+function typing(){
+
+
+if(index < text.length){
+
+
+typingElement.innerHTML += text.charAt(index);
+
+
+index++;
+
+
+setTimeout(typing,100);
+
+
+}
+
+
+}
+
+
+
+if(typingElement){
+
+typingElement.innerHTML="";
+
+typing();
+
+}
+
+
+
+
+
+
+// ================= SMOOTH SCROLL =================
+
 
 const links = document.querySelectorAll('a[href^="#"]');
 
 
-links.forEach(link => {
+links.forEach(link=>{
 
-    link.addEventListener("click", function(e){
 
-        const target = document.querySelector(
-            this.getAttribute("href")
-        );
+link.addEventListener("click",function(e){
 
-        if(target){
 
-            e.preventDefault();
+const target = document.querySelector(
+this.getAttribute("href")
+);
 
-            target.scrollIntoView({
-                behavior:"smooth"
-            });
 
-        }
+if(target){
 
-    });
+
+e.preventDefault();
+
+
+target.scrollIntoView({
+
+behavior:"smooth"
+
+});
+
+
+}
+
+
+});
+
 
 });
 
 
 
 
-// ===============================
-// Scroll Animation Cards
-// ===============================
 
-const cards = document.querySelectorAll(
-".project-card, .card, .contact-card, .service-card, .timeline-box, .why-card"
+
+// ================= SCROLL ANIMATION =================
+
+
+
+const elements = document.querySelectorAll(
+
+".project-card, .card, .service-card, .why-card, .timeline-box, .contact-card, .stat-box"
+
 );
+
 
 
 const observer = new IntersectionObserver((entries)=>{
@@ -48,73 +111,188 @@ const observer = new IntersectionObserver((entries)=>{
 entries.forEach(entry=>{
 
 
-    if(entry.isIntersecting){
+if(entry.isIntersecting){
 
-        entry.target.classList.add("show");
 
-    }
+entry.target.classList.add("show");
+
+
+}
 
 
 });
 
 
 },{
-    threshold:0.2
-});
 
-
-
-cards.forEach(card=>{
-
-    card.classList.add("hidden");
-
-    observer.observe(card);
+threshold:0.2
 
 });
 
 
 
-
-// ===============================
-// Footer Year
-// ===============================
-
-const footer = document.querySelector("footer p");
+elements.forEach(element=>{
 
 
-if(footer){
+element.classList.add("hidden");
 
-const year = new Date().getFullYear();
 
-footer.innerHTML =
-`© ${year} Aqsa Bibi | Frontend Developer | All Rights Reserved`;
+observer.observe(element);
+
+
+});
+
+
+
+
+
+
+
+
+// ================= ACTIVE NAVBAR =================
+
+
+
+const sections = document.querySelectorAll("section");
+
+
+const navLinks = document.querySelectorAll(".nav-links a");
+
+
+
+window.addEventListener("scroll",()=>{
+
+
+let current="";
+
+
+sections.forEach(section=>{
+
+
+const top = section.offsetTop - 150;
+
+
+
+if(scrollY >= top){
+
+
+current = section.getAttribute("id");
+
 
 }
 
 
 
+});
 
 
-// ===============================
-// Button Animation
-// ===============================
 
-const buttons = document.querySelectorAll(".btn");
+navLinks.forEach(link=>{
+
+
+link.classList.remove("active");
+
+
+
+if(link.getAttribute("href") === "#"+current){
+
+
+link.classList.add("active");
+
+
+}
+
+
+
+});
+
+
+});
+
+
+
+
+
+
+
+
+// ================= COUNTER =================
+
+
+
+const counters = document.querySelectorAll(".stat-box h2");
+
+
+
+counters.forEach(counter=>{
+
+
+let value = parseInt(counter.innerText);
+
+
+
+let start = 0;
+
+
+
+let interval = setInterval(()=>{
+
+
+start++;
+
+
+counter.innerText = start + "+";
+
+
+
+if(start >= value){
+
+
+clearInterval(interval);
+
+
+}
+
+
+
+},50);
+
+
+
+});
+
+
+
+
+
+
+
+
+// ================= BUTTON EFFECT =================
+
+
+
+const buttons = document.querySelectorAll(
+
+".btn, .btn-outline, .project-btn"
+
+);
+
 
 
 buttons.forEach(button=>{
 
 
-button.addEventListener("click",function(){
+button.addEventListener("click",()=>{
 
 
-this.style.transform="scale(0.95)";
+button.style.transform="scale(.9)";
 
 
 setTimeout(()=>{
 
 
-this.style.transform="scale(1)";
+button.style.transform="scale(1)";
 
 
 },150);
@@ -131,140 +309,27 @@ this.style.transform="scale(1)";
 
 
 
-// ===============================
-// Active Navbar
-// ===============================
 
-
-const sections = document.querySelectorAll("section");
-
-const navLinks = document.querySelectorAll(".nav-links a");
+// ================= FOOTER YEAR =================
 
 
 
-window.addEventListener("scroll",()=>{
+const footer = document.querySelector("footer p");
 
 
-let current="";
+
+if(footer){
 
 
-sections.forEach(section=>{
+const year = new Date().getFullYear();
 
 
-const sectionTop = section.offsetTop - 150;
 
+footer.innerHTML =
 
-if(scrollY >= sectionTop){
-
-current = section.getAttribute("id");
+`© ${year} Eng. Aqsa | Frontend Web Developer | All Rights Reserved`;
 
 }
-
-
-});
-
-
-
-navLinks.forEach(link=>{
-
-
-link.classList.remove("active");
-
-
-if(link.getAttribute("href") === "#"+current){
-
-link.classList.add("active");
-
-}
-
-
-});
-
-
-});
-
-
-
-
-
-
-// ===============================
-// Animated Counter
-// ===============================
-
-
-const counters = document.querySelectorAll(".stat-box h2");
-
-
-const counterObserver = new IntersectionObserver((entries)=>{
-
-
-entries.forEach(entry=>{
-
-
-if(entry.isIntersecting){
-
-
-const counter = entry.target;
-
-
-const target = Number(counter.innerText);
-
-
-let count = 0;
-
-
-const update = ()=>{
-
-
-if(count < target){
-
-
-count++;
-
-
-counter.innerText = count + "+";
-
-
-setTimeout(update,40);
-
-
-}
-
-else{
-
-
-counter.innerText = target + "+";
-
-}
-
-
-};
-
-
-update();
-
-
-counterObserver.unobserve(counter);
-
-
-}
-
-
-});
-
-
-},{
-threshold:0.5
-});
-
-
-
-counters.forEach(counter=>{
-
-counterObserver.observe(counter);
-
-});
 
 
 
