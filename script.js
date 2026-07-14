@@ -334,3 +334,74 @@ footer.innerHTML =
 
 
 });
+// ================= SUPABASE =================
+
+const supabaseUrl = "https://obijnndneicluymtlftz.supabase.co";
+
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9iaWpubmRuZWljbHV5bXRsZnR6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwMzAxNTIsImV4cCI6MjA5OTYwNjE1Mn0.UUk_QmKUVpo7N0t_18jvOkGbTPzGy9gB8VHhdxKOTs4";
+
+const supabaseClient = supabase.createClient(
+supabaseUrl,
+supabaseKey
+);
+
+const contactForm = document.getElementById("contactForm");
+
+if(contactForm){
+
+contactForm.addEventListener("submit", async function(e){
+
+e.preventDefault();
+
+const name = document.getElementById("name").value;
+
+const email = document.getElementById("email").value;
+
+const subject = document.getElementById("subject").value;
+
+const message = document.getElementById("message").value;
+
+const { error } = await supabaseClient
+
+.from("contact_messages")
+
+.insert([{
+
+name:name,
+
+email:email,
+
+subject:subject,
+
+message:message
+
+}]);
+
+
+const success = document.getElementById("successMessage");
+
+
+if(error){
+
+success.style.color="red";
+
+success.innerHTML="Message could not be sent.";
+
+alert(JSON.stringify(error));
+console.log(error);
+
+}
+
+else{
+
+success.style.color="#00ff99";
+
+success.innerHTML="✅ Message sent successfully.";
+
+contactForm.reset();
+
+}
+
+});
+
+}

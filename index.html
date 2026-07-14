@@ -1275,7 +1275,46 @@ Vehari, Punjab, Pakistan
 
 
 
+<h3 class="form-title">Send Me a Message</h3>
 
+<form id="contactForm" class="contact-form">
+
+<input
+type="text"
+id="name"
+placeholder="Your Full Name"
+required>
+
+<input
+type="email"
+id="email"
+placeholder="Your Email"
+required>
+
+<input
+type="text"
+id="subject"
+placeholder="Subject">
+
+<textarea
+id="message"
+rows="6"
+placeholder="Write your message..."
+required></textarea>
+
+<button
+type="submit"
+class="btn">
+
+<i class="fa-solid fa-paper-plane"></i>
+
+Send Message
+
+</button>
+
+</form>
+
+<p id="successMessage"></p>
 
 
 
@@ -1347,7 +1386,12 @@ LinkedIn
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script src="script.js"></script>
+
+</body>
+ 
 
 
 </body>
